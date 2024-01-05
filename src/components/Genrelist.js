@@ -2,8 +2,10 @@ import React, {useEffect,useState} from 'react'
 import apiservice from '../services/api-service'
 import { Button, HStack, Image, List, ListItem } from '@chakra-ui/react'
 
-const Genrelist = () => {
+const Genrelist = (props) => {
+
   const [genres, setGenres] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState(props.selectedGenre);
 
   useEffect(() => {
     apiservice.get('/genres')
@@ -23,7 +25,8 @@ const Genrelist = () => {
               <HStack>
                 <Image boxSize="32px" borderRadius={8} src={genre.image_background} />
                 <Button 
-                fontSize="lg" variant="link">
+                  onClick={() => props.onSelectGenre(genre)}
+                  fontSize="lg" variant="link">
                   {genre.name}
                 </Button>
               </HStack>
